@@ -1,10 +1,23 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import { Client, Message } from "discord.js";
-import getW2GLink from "./commands/w2g";
-import getClashTeam from "./commands/clash";
-import showHelp from "./commands/help";
-const client = new Client();
+import * as fs from "fs";
+import * as Discord from "discord.js";
+import { Message } from "discord.js";
+
+const client: Discord.Client = new Discord.Client();
+client.commands = new Discord.Collection();
+const prefix = "!";
+
+const commandFiles = fs
+  .readdirSync("./commands")
+  .filter((file) => file.endsWith(".ts"));
+
+commandFiles.map((commandFile) => {
+  import(`./commands/${commandFile}`).then((command) => {
+    client.commands.set(command.default.name, command.default);
+    console.log(command);
+  });
+});
 
 client.on("ready", () => {
   console.log("Bot user online!");
@@ -15,8 +28,6 @@ client.on("ready", () => {
   }
 });
 
-const prefix = "!";
-
 client.on("message", async (message: Message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) {
     return;
@@ -25,12 +36,15 @@ client.on("message", async (message: Message) => {
   const args = message.content.slice(prefix.length).trim().split(" ");
   const command = args.shift().toLowerCase();
 
-  if (command === "w2g") {
-    getW2GLink(message, args);
-  } else if (command === "clash") {
-    getClashTeam(message);
-  } else if (command === "help") {
-    showHelp(message);
+  if (!client.commands.has(command)) {
+    return;
+  }
+
+  try {
+    client.commands.get(command).execute(message, args);
+  } catch (error) {
+    console.error(error);
+    message.reply("there was an error trying to execute that command!");
   }
 });
 
