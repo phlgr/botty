@@ -1,9 +1,9 @@
 import fetch from "node-fetch";
-export default async function getW2GLink(message) {
-  if (!message.content.split(" ")[1]) {
+export default async function getW2GLink(message, args) {
+  if (!args[0]) {
     message.channel.send("Please supply a link to a video! \n `!w2g [link]`");
   } else {
-    const videoLink = message.content.split(" ")[1];
+    const videoLink = args[0];
     if (
       (!videoLink.startsWith("https://www.youtube") &&
         !videoLink.startsWith("https://www.youtu.be")) ||
