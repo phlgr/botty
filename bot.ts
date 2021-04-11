@@ -9,7 +9,7 @@ client.on("ready", () => console.log("Bot user online!"));
 client.on("message", async (message) => {
   if (message.content.startsWith("!w2g")) {
     if (!message.content.split(" ")[1]) {
-      message.channel.send("Please supply a link to a video!");
+      message.channel.send("Please supply a link to a video! \n `!w2g [link]`");
     } else {
       const videoLink = message.content.split(" ")[1];
       if (
