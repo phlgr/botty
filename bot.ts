@@ -13,10 +13,9 @@ const commandFiles = fs
   .filter((file) => file.endsWith(".ts"));
 
 commandFiles.map((commandFile) => {
-  import(`./commands/${commandFile}`).then((command) => {
-    client.commands.set(command.default.name, command.default);
-    console.log(command);
-  });
+  import(`./commands/${commandFile}`).then((command) =>
+    client.commands.set(command.default.name, command.default)
+  );
 });
 
 client.on("ready", () => {
