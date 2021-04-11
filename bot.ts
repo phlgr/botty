@@ -1,8 +1,9 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import * as Discord from "discord.js";
-import getW2GLink from "./utils/w2g";
-import getClashTeam from "./utils/clash";
+import getW2GLink from "./commands/w2g";
+import getClashTeam from "./commands/clash";
+import showHelp from "./commands/help";
 const client = new Discord.Client();
 
 client.on("ready", () => {
@@ -26,8 +27,10 @@ client.on("message", async (message) => {
 
   if (command === "w2g") {
     getW2GLink(message, args);
-  } else if (message.content.startsWith(`${prefix}clash`)) {
+  } else if (command === "clash") {
     getClashTeam(message);
+  } else if (command === "help") {
+    showHelp();
   }
 });
 
