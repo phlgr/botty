@@ -1,5 +1,6 @@
+import { Message } from "discord.js";
 import fetch from "node-fetch";
-export default async function getW2GLink(message, args) {
+export default async function getW2GLink(message: Message, args: string[]) {
   if (!args[0]) {
     message.channel.send("Please supply a link to a video! \n `!w2g [link]`");
   } else {
