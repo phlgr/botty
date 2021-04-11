@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import * as Discord from "discord.js";
+import { Client, Message } from "discord.js";
 import getW2GLink from "./commands/w2g";
 import getClashTeam from "./commands/clash";
 import showHelp from "./commands/help";
-const client = new Discord.Client();
+const client = new Client();
 
 client.on("ready", () => {
   console.log("Bot user online!");
@@ -17,7 +17,7 @@ client.on("ready", () => {
 
 const prefix = "!";
 
-client.on("message", async (message) => {
+client.on("message", async (message: Message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) {
     return;
   }
@@ -30,7 +30,7 @@ client.on("message", async (message) => {
   } else if (command === "clash") {
     getClashTeam(message);
   } else if (command === "help") {
-    showHelp();
+    showHelp(message);
   }
 });
 
