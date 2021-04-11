@@ -1,10 +1,10 @@
 import "dotenv/config";
+import { prefix } from "./config.json";
 import fs from "fs";
 import Discord, { Message, Command, Client } from "discord.js";
 
 const client: Client = new Discord.Client();
 client.commands = new Discord.Collection();
-const prefix = "!";
 
 const commandPath =
   process.env.NODE_ENV === "production" ? "dist/commands" : "./src/commands";
