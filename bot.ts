@@ -1,21 +1,24 @@
-import * as dotenv from "dotenv";
-dotenv.config();
-import * as fs from "fs";
-import * as Discord from "discord.js";
-import { Message } from "discord.js";
+import "dotenv/config";
+import fs from "fs";
+import Discord, { Message, Command, Client } from "discord.js";
 
-const client: Discord.Client = new Discord.Client();
+const client: Client = new Discord.Client();
 client.commands = new Discord.Collection();
 const prefix = "!";
 
+const commandPath =
+  process.env.NODE_ENV === "production" ? "dist/commands" : "./commands";
+const commandFileType = process.env.NODE_ENV === "production" ? ".js" : ".ts";
+
 const commandFiles = fs
-  .readdirSync("./commands")
-  .filter((file) => file.endsWith(".ts"));
+  .readdirSync(commandPath)
+  .filter((file) => file.endsWith(commandFileType));
 
 commandFiles.map((commandFile) => {
-  import(`./commands/${commandFile}`).then((command) =>
-    client.commands.set(command.default.name, command.default)
-  );
+  import(`./commands/${commandFile}`).then((command) => {
+    client.commands.set(command.default.name, command.default);
+    console.log(command);
+  });
 });
 
 client.on("ready", () => {
@@ -40,7 +43,7 @@ client.on("message", async (message: Message) => {
   }
 
   try {
-    client.commands.get(command).execute(message, args);
+    client.commands.get(command).execute(message, args) as Command;
   } catch (error) {
     console.error(error);
     message.reply("there was an error trying to execute that command!");
