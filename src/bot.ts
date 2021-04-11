@@ -7,7 +7,7 @@ client.commands = new Discord.Collection();
 const prefix = "!";
 
 const commandPath =
-  process.env.NODE_ENV === "production" ? "dist/commands" : "./commands";
+  process.env.NODE_ENV === "production" ? "dist/commands" : "./src/commands";
 const commandFileType = process.env.NODE_ENV === "production" ? ".js" : ".ts";
 
 const commandFiles = fs
