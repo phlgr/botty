@@ -15,8 +15,8 @@ const commandFiles = fs
   .filter((file) => file.endsWith(commandFileType));
 
 commandFiles.map((commandFile) => {
-  import(`./commands/${commandFile}`).then((command) =>
-    client.commands.set(command.default.name, command.default)
+  import(`./commands/${commandFile}`).then(({ default: command }) =>
+    client.commands.set(command.name, command)
   );
 });
 
