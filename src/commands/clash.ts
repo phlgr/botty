@@ -36,13 +36,13 @@ export default {
           }),
         }
       ).then((response) => response.json());
-      console.log(searchResult);
       if (searchResult.type === "OK" && !searchResult.clashTeamKey) {
         return await getTeamDetails();
       } else {
         return searchResult;
       }
     };
+
     const searchResult: SummonerInfo = await getTeamDetails();
 
     if (searchResult.type === "ERROR") {
