@@ -6,7 +6,7 @@ export default {
   description: "Sends you a link to a w2g Room with the video in queue.",
   async execute(message: Message, args: string[]) {
     if (!args[0]) {
-      message.channel.send("Please supply a link to a video! \n `!w2g [link]`");
+      message.channel.send("Please supply a link to a video! \n `!w2g <link>`");
     } else {
       const videoLink = args[0];
       if (
