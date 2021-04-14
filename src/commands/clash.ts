@@ -22,7 +22,7 @@ export default {
 
     const summonerName = args[0];
 
-    const getTeamDetails = async (): Promise<SummonerInfo> => {
+    const getTeamDetails = async (counter: number): Promise<SummonerInfo> => {
       const searchResult: SummonerInfo = await fetch(
         "https://www.lolvvv.com/api/clash",
         {
@@ -36,14 +36,21 @@ export default {
           }),
         }
       ).then((response) => response.json());
-      if (searchResult.type === "OK" && !searchResult.clashTeamKey) {
-        return await getTeamDetails();
+      console.log(searchResult);
+
+      if (
+        searchResult.type === "OK" &&
+        !searchResult.clashTeamKey &&
+        counter < 10
+      ) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        return await getTeamDetails(counter + 1);
       } else {
         return searchResult;
       }
     };
 
-    const searchResult: SummonerInfo = await getTeamDetails();
+    const searchResult: SummonerInfo = await getTeamDetails(0);
 
     if (searchResult.type === "ERROR") {
       reply.push(
