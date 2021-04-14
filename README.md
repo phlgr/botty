@@ -1,3 +1,3 @@
-# Discord VideoBot
+# Botty
 
-This is a bot you can send video links to and it will return a w2g link.
+Botty is a general purpose discord bot with specific functions for our private Discord server.
