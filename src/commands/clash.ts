@@ -41,7 +41,7 @@ export default {
       if (
         searchResult.type === "OK" &&
         !searchResult.clashTeamKey &&
-        counter < 10
+        counter < 20
       ) {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         return await getTeamDetails(counter + 1);
