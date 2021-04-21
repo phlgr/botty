@@ -9,7 +9,7 @@ type SummonerInfo = {
 
 export default {
   name: "clash",
-  description: "WIP",
+  description: "Get information about the persons clash team",
   async execute(message: Message, args: string[]) {
     const reply = [];
 
@@ -20,7 +20,7 @@ export default {
       return;
     }
 
-    const summonerName = args[0];
+    const summonerName = args.join(" ");
 
     const getTeamDetails = async (counter: number): Promise<SummonerInfo> => {
       const searchResult: SummonerInfo = await fetch(
