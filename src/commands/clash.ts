@@ -13,7 +13,7 @@ export default {
   async execute(message: Message, args: string[]) {
     const reply = [];
 
-    if (!args[0]) {
+    if (!args.length) {
       message.channel.send(
         "No summoner name supplied. \nPlease use command like this: `!clash <summoner name>`"
       );
@@ -22,35 +22,20 @@ export default {
 
     const summonerName = args.join(" ");
 
-    const getTeamDetails = async (counter: number): Promise<SummonerInfo> => {
-      const searchResult: SummonerInfo = await fetch(
-        "https://www.lolvvv.com/api/clash",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify({
-            platformId: "EUW1",
-            summonerName,
-          }),
-        }
-      ).then((response) => response.json());
-      console.log(searchResult);
-
-      if (
-        searchResult.type === "OK" &&
-        !searchResult.clashTeamKey &&
-        counter < 20
-      ) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        return await getTeamDetails(counter + 1);
-      } else {
-        return searchResult;
+    const searchResult: SummonerInfo = await fetch(
+      "https://www.lolvvv.com/api/clash",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+          platformId: "EUW1",
+          summonerName,
+        }),
       }
-    };
-
-    const searchResult: SummonerInfo = await getTeamDetails(0);
+    ).then((response) => response.json());
+    console.log(searchResult);
 
     if (searchResult.type === "ERROR") {
       reply.push(
