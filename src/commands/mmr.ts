@@ -68,7 +68,10 @@ export default {
         summonerMMR.ranked.avg
       }\n${summonerMMR.ranked.summary
         .replace(/<br ?\/?>/g, "\n")
-        .replace(/<\/?[^>]+(>|$)/g, "")}`
+        .replace(
+          /<\/?[^>]+(>|$)/g,
+          ""
+        )}\nAll data is provided by: https://euw.whatismymmr.com/`
     );
   },
 } as Command;
