@@ -17,6 +17,7 @@ export default {
         message.channel.send(
           "At the moment this Bot only supports valid YouTube Links."
         );
+        return;
       } else {
         const w2gRoomLink = await fetch("https://w2g.tv/rooms/create.json", {
           method: "POST",
