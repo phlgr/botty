@@ -37,7 +37,10 @@ export default {
     ).then((response) => response.json());
     console.log(searchResult);
 
-    if (searchResult.type === "ERROR") {
+    if (
+      searchResult.type === "ERROR" ||
+      searchResult.clashTeamId === undefined
+    ) {
       reply.push(
         "Either there is a typo in the name or the summoner isn't participating in the current clash!"
       );
